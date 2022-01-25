@@ -40,9 +40,10 @@ router.get("/", restricted, (req, res, next) => { // done for you
     }
   ]
  */
-router.get("/:user_id", restricted, only('admin'), (req, res, next) => { // done for you
+router.get("/:user_id", restricted, (req, res, next) => { // done for you
   Users.findById(req.params.user_id)
     .then(user => {
+      user = {user_id: user.user_id, username: user.username}
       res.json(user);
     })
     .catch(next);
