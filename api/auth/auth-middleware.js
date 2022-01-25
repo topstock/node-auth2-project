@@ -27,11 +27,10 @@ const restricted = (req, res, next) => {
    if (err) {
      next({ status: 401, message: "Token invalid"})
    } else {
-    req.decodedJwt = decoded
-    next() 
+     req.decodedJwt = decoded
+     next() 
    }
  })
- next()
 }
 
 const only = role_name => (req, res, next) => {
@@ -61,10 +60,12 @@ const checkUsernameExists = (req, res, next) => {
       "message": "Invalid credentials"
     }
   */
-    req.user = User.findById
-    if (req.decodedJwt !== role_name) {
-      return next({ status: 403, message: 'This is not for you'})
+    const userWithUsername = User.findBy({username: req.body.username})
+    const {user_id, username, role_name } = userWithUsername
+    if (user_id === undefined) {
+      return next({ status: 401, message: 'Invalid credentials'})
     } else {
+      req.user = {user_id, username, role_name }
       next() 
     }
 }
@@ -89,6 +90,15 @@ const validateRoleName = (req, res, next) => {
       "message": "Role name can not be longer than 32 chars"
     }
   */
+    const {role_name } = req.body
+    if (role_name.trim().toLowerCase() === 'admin') {
+      return next({ status: 422, message: 'Role name can not be admin'})
+    }
+    if (role_name.length > 32) {
+      return next({ status: 422, message: 'Role name can not be longer than 32 char'})
+    } else {
+      next()
+    }
 }
 
 module.exports = {
