@@ -19,15 +19,15 @@ You will complete the following tasks and do any extra wiring and package instal
 Write the following user access functions inside `api/users/users-model.js`:
 
 - [X] `find`
-- [ ] `findBy`
-- [ ] `findById`
+- [X] `findBy`
+- [X] `findById`
 
 #### 2B - Middleware Functions
 
 Write the following auth middlewares inside `api/auth/auth-middleware.js`:
 
-- [ ] `restricted`
-- [ ] `only`
+- [X] `restricted`
+- [X] `only`
 - [ ] `checkUsernameExists`
 - [ ] `validateRoleName`
 
